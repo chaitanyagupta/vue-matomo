@@ -71,8 +71,12 @@ export default function install (Vue, setupOptions = {}) {
   const options = Object.assign({}, defaultOptions, setupOptions)
 
   const { host, siteId, trackerFileName, trackerUrl } = options
-  const trackerScript = `${host}/${trackerFileName}.js`
-  const trackerEndpoint = trackerUrl || `${host}/${trackerFileName}.php`
+  const trackerScript = (trackerFileName.endsWith('/')
+    ? `${host}/${trackerFileName}`
+    : `${host}/${trackerFileName}.js`)
+  const trackerEndpoint = (trackerUrl || (trackerFileName.endsWith('/')
+    ? `${host}/${trackerFileName}`
+    : `${host}/${trackerFileName}.php`))
 
   window._paq = window._paq || []
 
